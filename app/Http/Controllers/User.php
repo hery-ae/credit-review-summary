@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\Segmentation;
 
 class User extends Controller
 {
@@ -13,7 +15,7 @@ class User extends Controller
      */
     public function index()
     {
-        return view('user.index', ['title' => '']);
+        return view('user.index');
     }
 
     /**
@@ -23,7 +25,13 @@ class User extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::get();
+        $segmentations = Segmentation::get();
+
+        return view('user.create', [
+            'roles' => $roles,
+            'segmentations' => $segmentations,
+        ]);
     }
 
     /**

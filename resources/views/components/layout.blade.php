@@ -15,14 +15,17 @@
 @endif
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- base css -->
-    <link rel="stylesheet" media="screen, print" href="/css/vendors.bundle.css">
-    <link rel="stylesheet" media="screen, print" href="/css/app.bundle.css">
     <!-- Place favicon.ico in the root directory -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
     <link rel="icon" type="image/ico" sizes="32x32" href="/favicon.ico">
     <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <!-- base css -->
+    <link rel="stylesheet" media="screen, print" href="/css/vendors.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="/css/app.bundle.css">
+    <!-- vendor css -->
     <link rel="stylesheet" media="screen, print" href="/css/datagrid/datatables/datatables.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="/css/notifications/sweetalert2/sweetalert2.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="/css/formplugins/select2/select2.bundle.css">
 
     <style type="text/css">
 
@@ -690,6 +693,8 @@
     <script src="/js/vendors.bundle.js"></script>
     <script src="/js/app.bundle.js"></script>
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
+    <script src="/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
+    <script src="/js/formplugins/select2/select2.bundle.js"></script>
     <script src="/moment/min/moment.min.js"></script>
 
 @stack('scripts')

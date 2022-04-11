@@ -1,4 +1,5 @@
 <x-layout>
+<x-slot name="title">Users - {{ config('app.name') }}</x-slot>
 					<!-- BEGIN Page Content -->
                     <!-- the #js-page-content id is needed for some plugins to initialize -->
                     <main id="js-page-content" role="main" class="page-content">
@@ -72,7 +73,7 @@
                 lengthChange: false,
                 bInfo: false,
                 order: [],
-    @can('create', 'App\User')
+//@@can('create', 'App\User')
                 select: {
                     style: 'multi',
                     items: 'cell'
@@ -132,12 +133,12 @@
                         }
                     }
                 ],
-    @endcan
+//@@endcan
                 data: [
                     
                 ],
                 columns: [
-    @can('create', 'App\User')
+//@@can('create', 'App\User')
                     {
                         title: '<i class="fal fa-check"></i>',
                         orderable: false,
@@ -146,7 +147,7 @@
                         className: 'select-checkbox text-center',
                         width: '5%'
                     },
-    @endcan
+//@@endcan
                     {
                         title: 'E-mail',
                         data: 'email'
@@ -207,11 +208,11 @@
                 language: {
                     infoFiltered: ''
                 },
-    @can('create', 'App\User')
+//@@can('create', 'App\User')
                 createdRow: function(row, data, dataIndex) {
                     $(row).addClass('pointer');
                 },
-    @endcan
+//@@endcan
                 initComplete: function(settings, json) {
                     settings.oInstance.api().columns().header().to$().addClass('text-center');
                     settings.oInstance.api().table().header().classList.add('thead-dark');
