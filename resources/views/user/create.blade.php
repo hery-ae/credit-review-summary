@@ -46,7 +46,7 @@
 @endforeach
                                                 </div>
 												<div class="form-group">
-                                                    <label class="form-label" for="segmentation">Role Permission</label>
+                                                    <label class="form-label" for="segmentation">Segmentation</label>
 @foreach ($segmentations as $value)
                                                     <select name="segmentation-id[]" class="form-control mb-1 text-capitalize">
                                                         <option class="text-capitalize" value>choose</option>
