@@ -17,7 +17,6 @@ class CreateUserRolesTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('role_id');
-            $table->foreignId('segmentation_id');
             $table->timestamps(0);
         });
     }

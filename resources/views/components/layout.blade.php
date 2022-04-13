@@ -695,7 +695,7 @@
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/notifications/sweetalert2/sweetalert2.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
-    <script src="/moment/min/moment.min.js"></script>
+    <script src="/js/moment/min/moment.min.js"></script>
 
 @stack('scripts')
 
@@ -706,49 +706,6 @@
             var nav = [
 @can('viewAny', 'App\SalesDeal')
                 'nav.dashboard',
-@endcan
-@can('viewAny', 'App\InterbankDeal')
-                'nav.interbank_dealing',
-@endcan
-@can('viewAny', 'App\NopAdjustment')
-                'nav.interbank_nop',
-@endcan
-@can('viewAny', 'App\SalesDeal')
-                'nav.sales_fx',
-@endcan
-@can('viewAny', 'App\SpecialRateDeal')
-                'nav.sales_special_rate_deal',
-@endcan
-@can('viewAny', 'App\Cancellation')
-                'nav.sales_cancellations',
-                'nav.rejections',
-@endcan
-@can('viewAny', 'App\SalesDeal')
-                'nav.sales_blotter',
-@endcan
-@can('update', new App\SalesDeal)
-                'nav.sales_top_ten_obox',
-@endcan
-@can('viewAny', 'App\Currency')
-                'nav.currencies',
-@endcan
-@can('viewAny', 'App\ClosingRate')
-                'nav.closing_rates',
-@endcan
-@can('viewAny', 'App\Account')
-                'nav.accounts',
-@endif
-@can('create', 'App\News')
-                'nav.news',
-@endcan
-@can('viewAny', 'App\User')
-                'nav.users',
-@endcan
-@can('viewAny', 'App\Threshold')
-                'nav.settings_threshold',
-@endcan
-@can('viewAny', 'App\Role')
-                'nav.settings_dealer_limits',
 @endcan
             ];
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\Segmentation;
+use App\Models\User as UserModel;
 
 class User extends Controller
 {
@@ -15,7 +16,20 @@ class User extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        $users = UserModel::with([
+                'userRoles' => function($query) {
+                    $query->with(['role']);
+                },
+                'userSegmentations' => function($query) {
+                    $query->with(['segmentation']);
+                },
+            ])
+            ->latest()
+            ->get();
+
+        return view('user.index', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -42,7 +56,22 @@ class User extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = UserModel::updateOrCreate(
+                ['email' => $request->input('email')],
+            );
+
+        $user->userRoles()->whereNotIn('role_id', array_map('intval', $request->input('role-id')))->delete();
+        $user->userSegmentations()->whereNotIn('segmentation_id', array_map('intval', $request->input('segmentation-id')))->delete();
+
+        foreach (array_filter($request->input('role-id')) as $key => $value) {
+            $user->userRoles()->updateOrCreate(['role_id' => ((int) $value)]);
+        }
+
+        foreach (array_filter($request->input('segmentation-id')) as $value) {
+            $user->userSegmentations()->updateOrCreate(['segmentation_id' => ((int) $value)]);
+        }
+
+        return redirect()->route('users.index');
     }
 
     /**

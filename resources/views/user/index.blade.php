@@ -134,9 +134,7 @@
                     }
                 ],
 //@@endcan
-                data: [
-                    
-                ],
+                data: @json($users->toArray()),
                 columns: [
 //@@can('create', 'App\User')
                     {
@@ -153,27 +151,25 @@
                         data: 'email'
                     },
                     {
-                        title: 'Region',
-                        data: 'branch',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return (data.find(value => value.region) || {region: null}).region;
-                        }
-                    },
-                    {
-                        title: 'Branch',
-                        data: 'branch',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return (data.find(value => value.name) || {name: null}).name;
-                        }
-                    },
-                    {
-                        title: 'Role',
-                        data: 'role.name',
+                        title: 'Role Permission',
+                        data: 'user_roles',
                         className: 'text-capitalize text-center',
                         render: function(data, type, row, meta) {
-                            return (data || null);
+
+                            return data.map( data => {
+                                return data.role.name;
+                            }).join(document.createElement('br').outerHTML);
+                        }
+                    },
+                    {
+                        title: 'Segmentation',
+                        data: 'user_segmentations',
+                        className: 'text-capitalize text-center',
+                        render: function(data, type, row, meta) {
+
+                            return data.map( data => {
+                                return data.segmentation.name;
+                            }).join(document.createElement('br').outerHTML);
                         }
                     },
                     {
@@ -190,18 +186,6 @@
                         className: 'text-center',
                         render: function(data, type, row, meta) {
                             return moment(data).format('llll');
-                        }
-                    },
-                    {
-                        title: 'Expires At',
-                        data: 'expires_at',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            if (data) {
-                                data = moment(data).format('ll');
-                            }
-
-                            return data;
                         }
                     }
                 ],

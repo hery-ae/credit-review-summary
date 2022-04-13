@@ -56,7 +56,7 @@
                                                     </select>
 @endforeach
                                                 </div>
-												<button type="button" class="btn btn-lg btn-default">
+												<button type="submit" class="btn btn-lg btn-default">
                                                     <span class="fal fa-check mr-1"></span>
                                                     Submit
                                                 </button>

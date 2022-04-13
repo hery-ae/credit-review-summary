@@ -18,9 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
-        'password',
     ];
 
     /**
@@ -41,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user roles for the user.
+     */
+    public function userRoles()
+    {
+        return $this->hasMany(UserRole::class);
+    }
+
+    /**
+     * Get the user segmentations for the user.
+     */
+    public function userSegmentations()
+    {
+        return $this->hasMany(UserSegmentation::class);
+    }
 }
