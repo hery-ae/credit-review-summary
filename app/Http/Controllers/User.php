@@ -93,7 +93,15 @@ class User extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::get();
+        $segmentations = Segmentation::get();
+        $user = UserModel::find($id);
+
+        return view('user.edit', [
+            'roles' => $roles,
+            'segmentations' => $segmentations,
+            'user' => $user,
+        ]);
     }
 
     /**

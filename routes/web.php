@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User;
+use App\Http\Controllers\SMELogbook;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,15 @@ use App\Http\Controllers\User;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::resource('users', User::class);
+
+Route::prefix('SME')->group( function() {
+    Route::resource('logbook', SMELogbook::class);
+});
+
+Route::prefix('commercial')->group( function() {
+    Route::resource('logbook', CommercialLogbook::class);
+});

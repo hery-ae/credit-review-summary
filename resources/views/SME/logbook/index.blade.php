@@ -1,16 +1,17 @@
 <x-layout>
-<x-slot name="title">Users - {{ config('app.name') }}</x-slot>
+<x-slot name="title">Logbook - SME - {{ config('app.name') }}</x-slot>
 					<!-- BEGIN Page Content -->
                     <!-- the #js-page-content id is needed for some plugins to initialize -->
                     <main id="js-page-content" role="main" class="page-content">
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">{{ config('app.name') }}</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item"><a href="/">{{ config('app.name') }}</a></li>
+                            <li class="breadcrumb-item"><a href="#SME">SME</a></li>
+                            <li class="breadcrumb-item active">Logbook</li>
                             <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                         </ol>
                         <div class="subheader">
                             <h1 class="subheader-title">
-                                <i class='subheader-icon fal fa-table'></i> Users
+                                <i class='subheader-icon fal fa-table'></i> Logbook / SME
                             </h1>
                         </div>
 @if (session('status'))
@@ -30,7 +31,7 @@
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
-											User <span class="fw-300"><i>Table</i></span>
+											Logbook <span class="fw-300"><i>Table</i></span>
 										</h2>
 										<div class="panel-toolbar">
                                             <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -62,7 +63,7 @@
             
             $.fn.dataTable.ext.errMode = 'throw';
             
-            $('#dt-user').DataTable({
+            dtAdvance = $('#dt-user').DataTable({
                 responsive: true,
                 fixedHeader: {
                     headerOffset: $(document.body)
@@ -76,8 +77,7 @@
 //@@can('create', 'App\User')
                 select: {
                     style: 'multi',
-                    items: 'row',
-                    selector: '.select-checkbox'
+                    items: 'cell'
                 },
                 
                 dom: "<'row mb-3'" +
@@ -135,18 +135,11 @@
                     }
                 ],
 //@@endcan
-                data: @json($users->toArray()),
+                ajax: {
+                    url: 'http://devdloan.ccbi.co.id/api/aplikasi/comex/6/trackingUser/tables',
+                    type: 'POST'
+                },
                 columns: [
-//@@can('create', 'App\User')
-                    {
-                        title: '<i class="fal fa-check"></i>',
-                        orderable: false,
-                        className: 'select-checkbox text-center',
-                        width: '5%',
-                        data: null,
-                        defaultContent: ''
-                    },
-//@@endcan
                     {
                         title: 'E-mail',
                         data: 'email'
@@ -201,18 +194,9 @@
                 initComplete: function(settings, json) {
                     settings.oInstance.api().columns().header().to$().addClass('text-center');
                     settings.oInstance.api().table().header().classList.add('thead-dark');
-
-                    $(settings.oInstance.api().table().body()).on('click', 'td:not(.select-checkbox)', function(e) {
-                        window.location.assign(
-                            String('/users/')
-                            .concat(settings.oInstance.api().row($(e.currentTarget).closest('tr').index()).data().id)
-                            .concat('/edit')
-                        );
-                    });
                 }
-
-            });
-        });
+            })
+        })
 
     </script>
 @endpush
