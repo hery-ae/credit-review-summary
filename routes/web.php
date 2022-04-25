@@ -15,16 +15,28 @@ use App\Http\Controllers\SMELogbook;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
+Route::get('/oauth2', function() {
+
+return view('SME.logbook.index');
+
+    return view('oauth2');
+    //return redirect('/oauth2/callback?code='.Str::random(64).'&state='.session()->get(config('oauth2login.session_key_state')));
 });
 
-Route::resource('users', User::class);
+Route::middleware('oauth2')->group( function() {
 
-Route::prefix('SME')->group( function() {
-    Route::resource('logbook', SMELogbook::class);
-});
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::prefix('commercial')->group( function() {
-    Route::resource('logbook', CommercialLogbook::class);
+    Route::resource('users', User::class);
+
+    Route::prefix('SME')->group( function() {
+        Route::resource('logbook', SMELogbook::class);
+    });
+
+    Route::prefix('commercial')->group( function() {
+        Route::resource('logbook', CommercialLogbook::class);
+    });
+
 });

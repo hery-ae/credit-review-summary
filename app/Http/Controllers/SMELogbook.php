@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use League\OAuth2\Client\Provider\GenericProvider;
 use Illuminate\Support\Facades\Http;
 
 class SMELogbook extends Controller
@@ -14,6 +15,34 @@ class SMELogbook extends Controller
      */
     public function index()
     {
+
+
+$http = Http::withHeaders([
+    'Content-Type' => 'application/json',
+    'Accept' => 'application/json',
+    'Authorization' => 'Bearer '.session()->get(config('oauth2login.session_key'))->getToken(),
+])
+->post('http://devdloan.ccbi.co.id/api/aplikasi/commercial/0/trackingUser/tables', request()->all())
+
+;
+
+return $http;
+
+
+$genericProvider = (new GenericProvider(config('oauth2login.oauthconf')));
+$request = $genericProvider->getAuthenticatedRequest('POST', 'http://devdloan.ccbi.co.id/api/aplikasi/commercial/0/trackingUser/tables', session()->get(config('oauth2login.session_key')), ['headers' =>  [
+            'Content-Type' => 'application/json; charset=utf-8',
+        ],
+        'body' => '{}'
+        ]);
+
+dd(
+
+//$request
+$genericProvider->getResponse($request)
+    
+);
+
         //Http::get('http://devdloan.ccbi.co.id/api/aplikasi/comex/6/trackingUser/tables');
 
         return view('SME.logbook.index');

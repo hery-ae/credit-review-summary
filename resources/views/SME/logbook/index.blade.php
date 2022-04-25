@@ -74,6 +74,10 @@
                 lengthChange: false,
                 bInfo: false,
                 order: [],
+
+processing: true,
+serverSide: true,
+
 //@@can('create', 'App\User')
                 select: {
                     style: 'multi',
@@ -136,9 +140,24 @@
                 ],
 //@@endcan
                 ajax: {
-                    url: 'http://devdloan.ccbi.co.id/api/aplikasi/comex/6/trackingUser/tables',
-                    type: 'POST'
+                    url: 'http://crs.ccbi.co.id/SME/logbook',
+                    type: 'GET'
                 },
+                columns: [
+                    {
+                        data: 'noAplikasi',
+                    },
+                    {
+                        data: 'nama',
+                    },
+                    {
+                        data: 'namaCabang',
+                    },
+                    {
+                        data: 'statusAplikasi',
+                    }
+                ],
+/*
                 columns: [
                     {
                         title: 'E-mail',
@@ -183,6 +202,7 @@
                         }
                     }
                 ],
+*/
                 language: {
                     infoFiltered: ''
                 },
