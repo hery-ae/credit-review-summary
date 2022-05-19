@@ -15,37 +15,18 @@ class SMELogbook extends Controller
      */
     public function index()
     {
+        $url = 'http://devdloan.ccbi.co.id/api/aplikasi/comex/5/trackingUser/tables';
+        $headers = ['Content-Type' => 'application/json; charset=utf-8'];
 
+        $genericProvider = (new GenericProvider(config('oauth2login.oauthconf')));
+        $request = $genericProvider->getAuthenticatedRequest('POST', $url, session()->get(config('oauth2login.session_key')), [
+                'headers' => $headers,
+                'body' => '{}'
+            ]);
 
-$http = Http::withHeaders([
-    'Content-Type' => 'application/json',
-    'Accept' => 'application/json',
-    'Authorization' => 'Bearer '.session()->get(config('oauth2login.session_key'))->getToken(),
-])
-->post('http://devdloan.ccbi.co.id/api/aplikasi/commercial/0/trackingUser/tables', request()->all())
-
-;
-
-return $http;
-
-
-$genericProvider = (new GenericProvider(config('oauth2login.oauthconf')));
-$request = $genericProvider->getAuthenticatedRequest('POST', 'http://devdloan.ccbi.co.id/api/aplikasi/commercial/0/trackingUser/tables', session()->get(config('oauth2login.session_key')), ['headers' =>  [
-            'Content-Type' => 'application/json; charset=utf-8',
-        ],
-        'body' => '{}'
+        return view('SME.logbook.index', [
+            'applications' => $genericProvider->getParsedResponse($request),
         ]);
-
-dd(
-
-//$request
-$genericProvider->getResponse($request)
-    
-);
-
-        //Http::get('http://devdloan.ccbi.co.id/api/aplikasi/comex/6/trackingUser/tables');
-
-        return view('SME.logbook.index');
     }
 
     /**

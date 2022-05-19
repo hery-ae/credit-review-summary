@@ -74,10 +74,6 @@
                 lengthChange: false,
                 bInfo: false,
                 order: [],
-
-processing: true,
-serverSide: true,
-
 //@@can('create', 'App\User')
                 select: {
                     style: 'multi',
@@ -139,70 +135,45 @@ serverSide: true,
                     }
                 ],
 //@@endcan
-                ajax: {
-                    url: 'http://crs.ccbi.co.id/SME/logbook',
-                    type: 'GET'
-                },
+                data: @json($applications['data']),
                 columns: [
                     {
-                        data: 'noAplikasi',
-                    },
-                    {
-                        data: 'nama',
-                    },
-                    {
-                        data: 'namaCabang',
-                    },
-                    {
-                        data: 'statusAplikasi',
-                    }
-                ],
-/*
-                columns: [
-                    {
-                        title: 'E-mail',
-                        data: 'email'
-                    },
-                    {
-                        title: 'Role Permission',
-                        data: 'user_roles',
-                        className: 'text-capitalize text-center',
-                        render: function(data, type, row, meta) {
-
-                            return data.map( data => {
-                                return data.role.name;
-                            }).join(document.createElement('br').outerHTML);
-                        }
-                    },
-                    {
-                        title: 'Segmentation',
-                        data: 'user_segmentations',
-                        className: 'text-capitalize text-center',
-                        render: function(data, type, row, meta) {
-
-                            return data.map( data => {
-                                return data.segmentation.name;
-                            }).join(document.createElement('br').outerHTML);
-                        }
-                    },
-                    {
-                        title: 'Created At',
-                        data: 'created_at',
+                        title: 'Submission',
+                        data: 'updatedAt',
                         className: 'text-center',
                         render: function(data, type, row, meta) {
-                            return moment(data).format('llll');
+                            return moment(data, 'DD/MM/YYYY').format('ll');
                         }
                     },
                     {
-                        title: 'Updated At',
-                        data: 'updated_at',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return moment(data).format('llll');
-                        }
+                        title: 'App Number',
+                        data: 'noAplikasi'
+                    },
+                    {
+                        title: 'Debtor',
+                        data: 'nama'
+                    },
+                    {
+                        title: 'Branch',
+                        data: 'namaCabang'
+                    },
+                    {
+                        title: 'Regional',
+                        data: 'namaCabang'
+                    },
+                    {
+                        title: 'Proposal Type',
+                        data: 'namaCabang'
+                    },
+                    {
+                        title: 'Position',
+                        data: 'updatedBy'
+                    },
+                    {
+                        title: 'Status',
+                        data: 'statusAplikasi'
                     }
                 ],
-*/
                 language: {
                     infoFiltered: ''
                 },
