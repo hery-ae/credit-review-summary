@@ -147,7 +147,8 @@
                     },
                     {
                         title: 'App Number',
-                        data: 'noAplikasi'
+                        data: 'noAplikasi',
+                        className: 'text-center'
                     },
                     {
                         title: 'Debtor',
@@ -159,11 +160,14 @@
                     },
                     {
                         title: 'Regional',
-                        data: 'namaCabang'
+                        data: null,
+                        defaultContent: ''
                     },
                     {
                         title: 'Proposal Type',
-                        data: 'namaCabang'
+                        data: null,
+                        defaultContent: '',
+                        className: 'text-center'
                     },
                     {
                         title: 'Position',
@@ -171,7 +175,8 @@
                     },
                     {
                         title: 'Status',
-                        data: 'statusAplikasi'
+                        data: 'statusAplikasi',
+                        className: 'text-center'
                     }
                 ],
                 language: {
