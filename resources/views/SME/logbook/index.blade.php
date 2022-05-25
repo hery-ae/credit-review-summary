@@ -160,15 +160,16 @@
                     },
                     {
                         title: 'Regional',
-                        data: null,
-                        defaultContent: ''
+                        data: 'namaRegional'
                     },
+/*
                     {
                         title: 'Proposal Type',
                         data: null,
                         defaultContent: '',
                         className: 'text-center'
                     },
+*/
                     {
                         title: 'Position',
                         data: 'updatedBy'

@@ -16,10 +16,12 @@ class SMELogbook extends Controller
     public function index()
     {
         $url = 'http://devdloan.ccbi.co.id/api/aplikasi/comex/5/trackingUser/tables';
+$url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/2602/';
         $headers = ['Content-Type' => 'application/json; charset=utf-8'];
 
         $genericProvider = (new GenericProvider(config('oauth2login.oauthconf')));
-        $request = $genericProvider->getAuthenticatedRequest('POST', $url, session()->get(config('oauth2login.session_key')), [
+$request = $genericProvider->getAuthenticatedRequest('GET', $url, session()->get(config('oauth2login.session_key')), [
+//        $request = $genericProvider->getAuthenticatedRequest('POST', $url, session()->get(config('oauth2login.session_key')), [
                 'headers' => $headers,
                 'body' => '{}'
             ]);
@@ -58,7 +60,10 @@ class SMELogbook extends Controller
      */
     public function show($id)
     {
-        //
+
+        return view('SME.logbook.show', [
+            //'applications' => $genericProvider->getParsedResponse($request),
+        ]);
     }
 
     /**
