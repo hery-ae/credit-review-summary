@@ -86,54 +86,7 @@
                     ">" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                buttons: [
-                    {
-                        text: '<span class="fal fa-plus-square mr-1"></span>Create',
-                        titleAttr: 'Create User',
-                        className: 'btn btn-outline-primary waves-effect waves-themed mr-1',
-                        action: function ( e, dt, node, config ) {
-                            window.location.replace(@json(route('users.create')));
-                        }
-                    },
-                    {
-                        text: '<span class="fal fa-times-square mr-1"></span>Delete',
-                        titleAttr: 'Delete User',
-                        className: 'btn btn-outline-danger waves-effect waves-themed collapse',
-                        action: function ( e, dt, node, config ) {
-                            dt.button().container().siblings().remove();
-                            dt.button().container().after(document.createElement('form'));
-                            dt.button().container().next().attr('action', @json(route('users.destroy', ['user' => 'deletes'])));
-                            dt.button().container().next().attr('method', 'post');
-                            
-                            dt.button().container().next().append(document.createElement('button'));
-                            dt.button().container().next().children().eq(0).addClass('collapse');
-                            dt.button().container().next().children().eq(0).attr('data-target', '#modal-alert');
-                            
-                            dt.button().container().next().append(document.createElement('input'));
-                            dt.button().container().next().children().eq(1).attr('type', 'hidden');
-                            dt.button().container().next().children().eq(1).attr('name', '_method');
-                            dt.button().container().next().children().eq(1).val(('delete').toUpperCase());
-                            
-                            dt.button().container().next().append(document.createElement('input'));
-                            dt.button().container().next().children().eq(2).attr('type', 'hidden');
-                            dt.button().container().next().children().eq(2).attr('name', '_token');
-                            dt.button().container().next().children().eq(2).val(
-                                $(document).find('meta[name="csrf-token"]').attr('content')
-                            );
-                            
-                            dt.rows({
-                                selected: true
-                            }).every( function ( rowIdx, tableLoop, rowLoop ) {
-                                dt.button().container().next().append(document.createElement('input'));
-                                dt.button().container().next().children().eq(rowLoop + 3).attr('type', 'hidden');
-                                dt.button().container().next().children().eq(rowLoop + 3).attr('name', 'deletes[]');
-                                dt.button().container().next().children().eq(rowLoop + 3).val(dt.row(rowIdx).data().id);
-                            })
-                            
-                            $('#modal-alert').modal();
-                        }
-                    }
-                ],
+                buttons: [],
 //@@endcan
                 data: @json($applications['data']),
                 columns: [
@@ -162,14 +115,12 @@
                         title: 'Regional',
                         data: 'namaRegional'
                     },
-/*
                     {
                         title: 'Proposal Type',
                         data: null,
                         defaultContent: '',
                         className: 'text-center'
                     },
-*/
                     {
                         title: 'Position',
                         data: 'updatedBy'

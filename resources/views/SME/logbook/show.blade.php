@@ -101,12 +101,6 @@
             initApp.destroyNavigation(myapp_config.navHooks);
             $('a[href="{!! url()->current() !!}"]').parent().attr('class', 'active');
             initApp.buildNavigation(myapp_config.navHooks);
-alert(
-@json( hash('sha256', 'cCBISha256') )
-)
-            $.ajax({
-                url: 'http://devdloan.ccbi.co.id/api/v1/aplikasi/2602'
-            })
 
         })
 

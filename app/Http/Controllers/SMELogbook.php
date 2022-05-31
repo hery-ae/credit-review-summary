@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use League\OAuth2\Client\Provider\GenericProvider;
-use Illuminate\Support\Facades\Http;
 
 class SMELogbook extends Controller
 {
@@ -16,12 +15,17 @@ class SMELogbook extends Controller
     public function index()
     {
         $url = 'http://devdloan.ccbi.co.id/api/aplikasi/comex/5/trackingUser/tables';
-$url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/2602/';
+//$url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/2602/';
         $headers = ['Content-Type' => 'application/json; charset=utf-8'];
+dd ([
+\App\Models\User::first()->createToken('SSO')->toArray(),
+\App\Models\User::first()->tokens,
+session()->get(config('oauth2login.session_key'))->getToken(),
 
+]);
         $genericProvider = (new GenericProvider(config('oauth2login.oauthconf')));
-$request = $genericProvider->getAuthenticatedRequest('GET', $url, session()->get(config('oauth2login.session_key')), [
-//        $request = $genericProvider->getAuthenticatedRequest('POST', $url, session()->get(config('oauth2login.session_key')), [
+//$request = $genericProvider->getAuthenticatedRequest('GET', $url, session()->get(config('oauth2login.session_key')), [
+        $request = $genericProvider->getAuthenticatedRequest('POST', $url, session()->get(config('oauth2login.session_key')), [
                 'headers' => $headers,
                 'body' => '{}'
             ]);
