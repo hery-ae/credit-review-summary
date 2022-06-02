@@ -70,7 +70,7 @@
                         .hasClass('header-function-fixed') ? $('header.page-header').outerHeight() : 0
                 },
                 paging: true,
-                pageLength: 50,
+                pageLength: 20,
                 lengthChange: false,
                 bInfo: false,
                 order: [],
@@ -88,7 +88,14 @@
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [],
 //@@endcan
-                data: @json($applications['data']),
+                serverSide: true,
+                ajax: {
+                    url: '/api/SME/logbook',
+                    type: 'GET',
+                    headers: {
+                        Authorization: String('Bearer').concat(' ').concat(@json(\App\Models\User::first()->createToken('SSO')->plainTextToken))
+                    }
+                },
                 columns: [
                     {
                         title: 'Submission',
@@ -117,9 +124,11 @@
                     },
                     {
                         title: 'Proposal Type',
-                        data: null,
-                        defaultContent: '',
-                        className: 'text-center'
+                        data: 'facilities',
+                        className: 'text-center',
+                        render: function(data, type, row, meta) {
+                            return data.map((facility) => facility.typeFacility.text).join(', ');
+                        }
                     },
                     {
                         title: 'Position',
