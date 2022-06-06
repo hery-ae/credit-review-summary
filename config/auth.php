@@ -40,6 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'oauth2' => [
+            'driver' => 'oauth2', // Config: oauth2login.auth_driver_key
+        ],
     ],
 
     /*

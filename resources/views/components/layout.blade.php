@@ -9,9 +9,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
-@if (auth()->check())
+@if (auth()->guard('oauth2')->check() && auth()->guard('oauth2')->user()->exists)
     <!-- API Token -->
-    <meta name="api-token" content="{{ auth()->user()->token()->firstOrNew([], ['api_token' => null])->api_token }}">
+    <meta name="sso-token" content="{{ auth()->guard('oauth2')->user()->createToken('SSO')->plainTextToken }}">
 @endif
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -58,19 +58,6 @@
         {
             object-fit: cover;
             object-position: top;
-        }
-
-        .panel-interbank-deal .btn:focus, .panel-interbank-deal .btn.focus, .panel-interbank-deal .btn:active, .panel-interbank-deal .btn.active,
-        .panel-sales-deal .btn:focus, .panel-sales-deal .btn.focus, .panel-sales-deal .btn:active, .panel-sales-deal .btn.active
-        {
-            -webkit-box-shadow: none;
-            box-shadow: none;
-        }
-
-        .panel-interbank-deal .card .card-title,
-        .panel-sales-deal .card .card-title
-        {
-            font-size: 1.65rem;
         }
 
         #alert-dismissible .fade:not(.show)
@@ -175,36 +162,64 @@
                         </a>
                     </div>
                 </div>
-@if (auth()->check())
-                    <div class="info-card">
-                        <img src="/img/avatars/avatar-male.png" alt="profile photo" class="profile-image rounded">
-                        <div class="info-card-text w-100 ml-0 text-center">
-                            <a href="{{ route('profile') }}" class="text-white">
-                                    <span class="text-truncate text-truncate-sm text-uppercase d-inline-block">
-                                        {{ auth()->user()->first_name }}
-                                    </span>
-                            </a>
-                            <span class="d-block">
-@if (auth()->user()->role)
-                                {{ ucwords(auth()->user()->role->name) }}
-@else
-                                {{ auth()->user()->branch()->first()->name }}
+@if (auth()->guard('oauth2')->check())
+                <div class="info-card">
+                    <img src="/img/avatars/avatar-male.png" alt="profile photo" class="profile-image rounded">
+                    <div class="info-card-text w-100 ml-0 text-center">
+                        <span class="fs-lg text-truncate text-truncate-sm text-uppercase d-inline-block">
+                            {{ auth()->guard('oauth2')->user()->first_name }}
+                        </span>
+@if (auth()->guard('oauth2')->user()->exists)
+                        <span class="d-block">
+                            {!! nl2br(ucwords(auth()->guard('oauth2')->user()->userRoles()->with('role')->get()->pluck('role.name')->join("\n"))) !!}
+                        </span>
 @endif
-								</span>
-                        </div>
-                        <img src="/img/backgrounds/bg-3.png" class="cover" alt="cover">
-                        <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
-                            <i class="fal fa-angle-down"></i>
-                        </a>
                     </div>
-                    <ul id="js-nav-menu" class="nav-menu">
-                        <li>
-                            <a href="{{ route('users.index') }}" title="Users" data-filter-tags="users">
-                                <i class="fal fa-user"></i>
-                                <span class="nav-link-text" data-i18n="nav.users">Users</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <img src="/img/backgrounds/bg-3.png" class="cover" alt="cover">
+                    <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
+                        <i class="fal fa-angle-down"></i>
+                    </a>
+                </div>
+                <ul id="js-nav-menu" class="nav-menu">
+                    <li>
+                        <a href="{{ url()->to('/') }}" title="Dashboard" data-filter-tags="dashboard">
+                            <i class="fal fa-chart-pie"></i>
+                            <span class="nav-link-text" data-i18n="nav.dashboard">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="SME" data-filter-tags="sme">
+                            <i class="ni ni-notebook"></i>
+                            <span class="nav-link-text" data-i18n="nav.theme_settings">SME</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route('SME.logbook.index') }}" title="Logbook" data-filter-tags="sme logbook">
+                                    <span class="nav-link-text" data-i18n="nav.sme_logbook">Logbook</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" title="Commercial" data-filter-tags="commercial">
+                            <i class="fal fa-book"></i>
+                            <span class="nav-link-text" data-i18n="nav.commercial">Commercial</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route('SME.logbook.index') }}" title="Logbook" data-filter-tags="commercial logbook">
+                                    <span class="nav-link-text" data-i18n="nav.commercial_logbook">Logbook</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('users.index') }}" title="Users" data-filter-tags="users">
+                            <i class="fal fa-user"></i>
+                            <span class="nav-link-text" data-i18n="nav.users">Users</span>
+                        </a>
+                    </li>
+                </ul>
 @endif
                 <div class="filter-message js-filter-message bg-success-600"></div>
             </nav>
@@ -247,10 +262,10 @@
                             <i class="fal fa-cog"></i>
                         </a>
                     </div>
-@if (auth()->check())
+@if (auth()->guard('oauth2')->check())
                     <!-- app user menu -->
                         <div>
-                            <a href="#" data-toggle="dropdown" title="{{ auth()->user()->email }}" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                            <a href="#" data-toggle="dropdown" title="{{ auth()->guard('oauth2')->user()->email }}" class="header-icon d-flex align-items-center justify-content-center ml-2">
                                 <img src="/img/avatars/avatar-male.png" width="32" height="32" class="profile-image rounded-circle fit-image" alt="User Avatar">
                             </a>
                             <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
@@ -262,10 +277,19 @@
                                         <div class="info-card-text">
                                             <div class="fs-lg text-truncate text-truncate-lg">
                                                 {{
-                                                    auth()->user()->full_name
+                                                    (string) (
+                                                        \Illuminate\Support\Str::of(auth()->guard('oauth2')->user()->first_name)
+                                                        ->when(auth()->guard('oauth2')->user()->last_name, function($string) {
+                                                            return $string->append(' ', auth()->guard('oauth2')->user()->last_name);
+                                                        })
+                                                        ->title()
+                                                        ->whenEmpty( function($string) {
+                                                            return auth()->guard('oauth2')->user()->email;
+                                                        })
+                                                    )
                                                 }}
                                             </div>
-                                            <span class="text-truncate text-truncate-md opacity-80">{{ auth()->user()->email }}</span>
+                                            <span class="text-truncate text-truncate-md opacity-80">{{ auth()->guard('oauth2')->user()->email }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -699,14 +723,16 @@
 
 @stack('scripts')
 
-@if (auth()->check())
+@if (auth()->guard('oauth2')->check())
     <script type="text/javascript">
         $(document).ready(function()
         {
             var nav = [
-@can('viewAny', 'App\SalesDeal')
+//@@can('viewAny', 'App\SalesDeal')
                 'nav.dashboard',
-@endcan
+                'nav.sme_logbook',
+                'nav.users'
+//@@endcan
             ];
 
             $('#js-nav-menu span[data-i18n]').each(function(key, element) {
@@ -734,7 +760,7 @@
                 profileImage.onerror = null;
 
                 profileImage.src = ('/img/avatars/avatar-')
-                    .concat(@json(strtolower(trim(auth()->user()->gender))))
+                    .concat(@json(strtolower(trim(auth()->guard('oauth2')->user()->gender))))
                     .concat('.png');
 
                 profileImage.onload = function() {
@@ -744,7 +770,17 @@
                 }
             }
 
-            profileImage.src = @json(auth()->user()->photo);
+            profileImage.src = @json(auth()->guard('oauth2')->user()->photo);
+
+            initApp.destroyNavigation(myapp_config.navHooks);
+            $(document).find(String('a[href="').concat(@json(url()->current())).concat('"]')).parent().attr('class', 'active');
+
+            if ($(document).find(String('a[href="').concat(@json(url()->current())).concat('"]')).parent().parent().parent().is('li')) {
+                $(document).find(String('a[href="').concat(@json(url()->current())).concat('"]')).parent().parent().parent()
+                .attr('class', 'active open');
+            }
+
+            initApp.buildNavigation(myapp_config.navHooks);
 
         });
 
@@ -756,343 +792,8 @@
     </script>
 
     <script type="text/javascript">
-
         $(document).find('.page-link[aria-label="Previous"]').on('click', function() {
             window.history.back();
-        })
-
-        $(document).find('#dt-advance, .dt-advance').find('thead').on('click', 'th.pointer', function(e) {
-            var checkSelected = true;
-            $(e.target).closest('#dt-advance, .dt-advance').find('tbody tr').each( function(index, element) {
-                if (!$(element).hasClass('selected')) {
-                    checkSelected = false;
-                }
-            })
-
-            if (checkSelected === true) {
-                $(e.target).closest('#dt-advance, .dt-advance').DataTable().rows().deselect();
-
-            } else {
-                $(e.target).closest('#dt-advance, .dt-advance').DataTable().rows().select();
-            }
-        })
-
-        $(document).find('main form button[data-toggle="modal"]').on('click', function(e) {
-            if (!e.target.closest('form').checkValidity()) {
-                e.target.closest('form').reportValidity();
-                e.stopPropagation();
-            }
-        })
-
-        $(document).find('#modal-alert').find('button').not('[data-dismiss="modal"]').on('click', function(e) {
-            $(e.target).closest('.modal.modal-alert').modal('toggle');
-
-            var id = $(e.target).closest('.modal.modal-alert').attr('id');
-            var button = $('button[data-target="#' + id + '"]');
-
-            if (button.length > 1) {
-                button = button.filter('.show');
-            }
-
-            button.closest('form').submit();
-
-            $(e.target).closest('.modal.modal-alert').on('hidden.bs.modal', function(e) {
-                if (button.closest('form').attr('target') === '_blank') {
-                    window.location.reload();
-                }
-            })
-        })
-
-        $(document).has('#panel-interbank-deal-index, #panel-interbank-deal-edit')
-            .on('input', '[im-insert]', function(e) {
-                e.currentTarget.previousElementSibling.value = e.currentTarget.value.replace(/\,/g, '');
-                $(e.currentTarget.previousElementSibling).trigger('input');
-
-                if ($(e.currentTarget).closest('form').find('label[for=counter-currency-rate]').length) {
-                    $(e.currentTarget).closest('form').find('label[for=counter-currency-rate]').next().val(
-                        (
-                            $(e.currentTarget).closest('form').find('input[name="base-currency-rate"]').val() / (
-                                $(e.currentTarget).closest('form').find('input[name="interoffice-rate"]').val() ? (
-                                    $(e.currentTarget).closest('form').find('input[name="interoffice-rate"]').val()
-                                ) : (
-                                    1
-                                )
-                            )
-                        )
-                            .toLocaleString('en-US')
-                    );
-                }
-
-                $(e.currentTarget).closest('form').find('label[for=counter-amount]').next().val(
-                    (
-                        (
-                            $(e.currentTarget).closest('form').find('input[name="customer-rate"]').length ? (
-                                $(e.currentTarget).closest('form').find('input[name="customer-rate"]')
-                            ) : (
-                                $(e.currentTarget).closest('form').find('input[name="interoffice-rate"]')
-                            )
-                        )
-                            .val() * (
-                            $(e.currentTarget).closest('form').find('input[name="amount"]').val()
-                        )
-                    )
-                        .toLocaleString('en-US')
-                );
-
-                e.currentTarget.commercial_bank_limit = parseFloat($('[name="commercial-bank-limit"]').val());
-                e.currentTarget.amount = parseFloat($('[name="amount"]').val());
-                e.currentTarget.base_currency_closing_rate = parseFloat($('[name="base-currency-closing-rate"]').val());
-                e.currentTarget.world_currency_closing_rate = parseFloat($('[name="world-currency-closing-rate"]').val());
-                e.currentTarget.world_currency_code = $('[name="world-currency-code"]').val();
-
-                e.currentTarget.usd_equivalent = (
-                    ($('[name="base-currency-code"]').val() === e.currentTarget.world_currency_code) ? (
-                        e.currentTarget.amount
-                    ) : (
-                        Math.abs(
-                            e.currentTarget.base_currency_closing_rate * (e.currentTarget.amount / e.currentTarget.world_currency_closing_rate)
-                        )
-                    ));
-
-                if (e.currentTarget.commercial_bank_limit && (parseFloat(e.currentTarget.usd_equivalent) > e.currentTarget.commercial_bank_limit)) {
-                    $('[name="amount"]').next().tooltip({
-                        trigger: 'manual',
-                        placement: 'bottom',
-                        title: 'Alert! The base amount over your limit.',
-                        template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger-500 mw-100"></div></div>'
-                    }).tooltip('show');
-
-                    $(e.currentTarget).closest('form').find('button').filter('[type=submit], [data-target="#modal-alert"]').prop('disabled', true);
-
-                } else {
-                    $('[name="amount"]').next().tooltip('hide');
-                    $(e.currentTarget).closest('form').find('button').filter('[type=submit], [data-target="#modal-alert"]').prop('disabled', false);
-                }
-            })
-
-        $(document).has('#panel-sales-deal-index, #panel-sales-deal-edit')
-            .on('input', '[im-insert]', function(e) {
-                e.currentTarget.previousElementSibling.value = e.currentTarget.value.replace(/\,/g, '');
-                $(e.currentTarget.previousElementSibling).trigger('input');
-
-                $('label[for=counter-amount]').next().val(
-                    (
-                        (
-                            $(e.currentTarget).closest('form').find('input[name="customer-rate"]').length ? (
-                                $(e.currentTarget).closest('form').find('input[name="customer-rate"]')
-                            ) : (
-                                $('input[name="interoffice-rate"]')
-                            )
-                        ).val() *
-                        $(e.currentTarget).closest('form').find('input[name="amount"]').val())
-                        .toLocaleString('en-US')
-                );
-
-                if (
-                    $(e.currentTarget).closest('form').find('[name="account-number"]').select2('data').length &&
-                    $(e.currentTarget).prev().is('[name="amount"]')
-                )
-                {
-                    $(e.currentTarget).closest('form').find('[name="account-number"]').trigger({
-                        type: 'select2:select',
-                        params: {
-                            data: $(e.currentTarget).closest('form').find('[name="account-number"]').first().select2('data').find(data => data.id)
-                        }
-                    })
-                }
-
-                e.currentTarget.sales_limit = $(e.currentTarget).closest('form').find('[name="sales-limit"]').val();
-                e.currentTarget.amount = $(e.currentTarget).closest('form').find('[name="amount"]').val();
-                e.currentTarget.base_currency_closing_rate = $(e.currentTarget).closest('form').find('[name="base-currency-closing-rate"]').val();
-                e.currentTarget.world_currency_closing_rate = $(e.currentTarget).closest('form').find('[name="world-currency-closing-rate"]').val();
-                e.currentTarget.base_currency_code = $(e.currentTarget).closest('form').find('[name="base-currency-code"]').val();
-                e.currentTarget.world_currency_code = $(e.currentTarget).closest('form').find('[name="world-currency-code"]').val();
-
-                e.currentTarget.usd_equivalent = (
-                    e.currentTarget.amount ? (
-                        (e.currentTarget.base_currency_code === e.currentTarget.world_currency_code) ? (
-                            parseFloat(e.currentTarget.amount)
-                        ) : (
-                            Math.abs(
-                                parseFloat(e.currentTarget.base_currency_closing_rate) * (
-                                    parseFloat(e.currentTarget.amount) / parseFloat(e.currentTarget.world_currency_closing_rate)
-                                )
-                            )
-                        )
-                    ) : (0)
-                );
-
-                if (e.currentTarget.sales_limit && (parseFloat(e.currentTarget.usd_equivalent) > parseFloat(e.currentTarget.sales_limit))) {
-                    $(e.currentTarget).closest('form').find('[name="amount"]').next().tooltip('dispose');
-
-                    $(e.currentTarget).closest('form').find('[name="amount"]').next().tooltip({
-                        trigger: 'manual',
-                        placement: 'bottom',
-                        title: 'Alert! The base amount over your limit.',
-                        template: String('<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-')
-                            .concat(
-                                $(e.currentTarget).closest(document.body).has('.panel-sales-deal .col-sm-4').length ? (
-                                    'danger'
-                                ) : (
-                                    'warning'
-                                )
-                            )
-                            .concat('-500 mw-100"></div></div>')
-                    }).tooltip('show');
-
-                } else {
-                    $(e.currentTarget).closest('form').find('[name="amount"]').next().tooltip('hide');
-                }
-
-            })
-
-        $(document.body).not(':has(#panel-sales-deal-index, #panel-sales-deal-edit, #panel-interbank-deal-index, #panel-interbank-deal-edit)')
-            .on('input', '[im-insert]', function(e) {
-                e.target.previousElementSibling.value = e.target.value.replace(/\,/g, '');
-                $(e.target.previousElementSibling).trigger('input');
-            })
-
-        $(document).find('[name="tod-tom-spot-forward"]').on('change', function(e) {
-            if (e.currentTarget.value && e.currentTarget.value.toLowerCase() !== 'tod') {
-                $(e.currentTarget).closest('form').find('[name="settlement-date"]').prop('required', true);
-                $(e.currentTarget).closest('form').find('[name="settlement-date"]').closest('.collapse').collapse('show');
-
-                if (e.currentTarget.value.toLowerCase() === 'tom') {
-                    $(e.currentTarget).closest('form').find('[name="settlement-date"]')
-                    .attr('min', moment($(e.currentTarget).closest('form').find('[name="created-at"]').val()).add(1, 'days').format('YYYY-MM-DD'));
-
-                } else if (e.currentTarget.value.toLowerCase() === 'spot') {
-                    $(e.currentTarget).closest('form').find('[name="settlement-date"]')
-                    .attr('min', moment($(e.currentTarget).closest('form').find('[name="created-at"]').val()).add(2, 'days').format('YYYY-MM-DD'));
-
-                } else if (e.currentTarget.value.toLowerCase() === 'forward') {
-                    $(e.currentTarget).closest('form').find('[name="settlement-date"]')
-                    .attr('min', moment($(e.currentTarget).closest('form').find('[name="created-at"]').val()).add(3, 'days').format('YYYY-MM-DD'));
-                }
-
-            } else {
-                $(e.currentTarget).closest('form').find('[name="settlement-date"]').prop('required', false);
-                $(e.currentTarget).closest('form').find('[name="settlement-date"]').closest('.collapse').collapse('hide');
-            }
-        })
-
-        $(document).find('textarea[name="description"]').on('input', function(e) {
-            if ($(e.target).val().length > parseInt($(e.target).attr('maxLength'))) {
-                $(e.target).val($(e.target).val().substr(0, maxLength));
-            }
-        })
-
-        $(document).find('select[name="region"]').on('change', function(e) {
-            $(e.currentTarget).closest('form').find('[name="branch-code"]').closest('.form-group').collapse('show');
-            $(e.currentTarget).closest('form').find('[name="branch-code"] option').not(':first').remove();
-            $(e.currentTarget).closest('form').find('[name="branch-code"]').trigger('change');
-            $(e.currentTarget).closest('form').find('[name="branch-code"]').prop('required', true);
-
-            $.ajax({
-                method: 'GET',
-                url: @json(route('api.branches.index')),
-                data: {
-                    api_token: $(document).find('meta[name="api-token"]').attr('content'),
-                    region: $(e.target).val()
-                }
-            }).done( function(response) {
-                $.each(response.data, function(index, value) {
-                    var elem = document.createElement('option');
-                    elem.value = value.code;
-
-                    if (elem.value === document.querySelector('select[name="branch-code"]').dataset.branchCode) {
-                        elem.selected = true;
-                    }
-
-                    elem.innerHTML = value.name;
-                    document.querySelector('select[name="branch-code"]').appendChild(elem);
-                })
-            });
-
-            if ($(e.currentTarget).closest('form').find('[name="role-id"]').length) {
-                $(e.currentTarget).closest('form').find('[name="role-id"]').children(':selected').prop('selected', false);
-
-                switch (e.currentTarget.value) {
-                    case ('kantor pusat').toUpperCase():
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').closest('.form-group').collapse('show');
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').prop('required', true);
-                        break;
-
-                    case '':
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').closest('.form-group').collapse('show');
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').prop('required', true);
-                        break;
-
-                    default:
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').closest('.form-group').collapse('hide');
-                        $(e.currentTarget).closest('form').find('[name="role-id"]').prop('required', false);
-                }
-            }
-        })
-
-        $(document).find('select[name="branch-code"]').on('change', function(e) {
-            if ($(e.currentTarget).closest('form').find('input[name="branch-name"]').length) {
-                $(e.currentTarget).closest('form').find('input[name="branch-name"]')
-                    .val(
-                        e.currentTarget.value ? (
-                            e.currentTarget.options[e.currentTarget.selectedIndex].innerHTML
-                        ) : (
-                            ''
-                        )
-                    );
-            }
-        })
-
-        $(document).find('select[name="role-id"]').on('change', function(e) {
-            if (
-                $.inArray(
-                    e.currentTarget.querySelector(':checked').innerHTML.trim().toLowerCase(), ['administrator', 'it security', 'it development']
-                ) >= 0
-            ) {
-                $(e.currentTarget).closest('form').find('[name="region"]').children(':selected').prop('selected', false);
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').children(':selected').prop('selected', false);
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').trigger('change');
-                $(e.currentTarget).closest('form').find('[name="region"]').closest('.form-group').collapse('hide');
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').closest('.form-group').collapse('hide');
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').prop('required', false);
-
-            } else {
-                $(e.currentTarget).closest('form').find('[name="region"]').closest('.form-group').collapse('show');
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').closest('.form-group').collapse('show');
-                $(e.currentTarget).closest('form').find('[name="branch-code"]').prop('required', true);
-            }
-
-        })
-
-        $(document).find('#modal-alert').on('show.bs.modal', function(e) {
-            var title = 'Yes, ';
-            var description = '';
-
-            if ($(e.relatedTarget).hasClass('btn-delete')) {
-                title += 'delete it!';
-                description += "You won't be able to revert this!";
-
-                if ($('.collapse.btn-delete').not(e.relatedTarget).length > 0) {
-                    $('.collapse.btn-delete').not(e.relatedTarget).collapse('hide');
-                    $('.dt-advance').not($(e.relatedTarget).closest('.panel').find('table')).DataTable().rows().deselect();
-                }
-
-            } else {
-                title += 'submit it!';
-            }
-
-            if ($(e.relatedTarget).closest('.panel').is('#panel-authorize')) {
-                $(e.relatedTarget).closest('.panel').find('button[data-target]').not($(e.relatedTarget)).collapse('hide');
-            }
-
-            $(e.target).find('button').not('[data-dismiss="modal"]').text(title);
-            $(e.target).find('.modal-body').text(description);
-        })
-
-        $(document).find('#modal-alert').on('hide.bs.modal', function(e) {
-            if ($('button[data-target="#' + e.target.id + '"]').closest('.panel').is('#panel-authorize')) {
-                $('button[data-target="#' + e.target.id + '"]').collapse('show');
-            }
         })
 
     </script>

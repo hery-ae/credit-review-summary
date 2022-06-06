@@ -75,11 +75,7 @@
                 bInfo: false,
                 order: [],
 //@@can('create', 'App\User')
-                select: {
-                    style: 'multi',
-                    items: 'cell'
-                },
-                
+                select: 'single',
                 dom: "<'row mb-3'" +
                     "<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f>" +
                     "<'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'lB>" +
@@ -93,7 +89,7 @@
                     url: '/api/SME/logbook',
                     type: 'GET',
                     headers: {
-                        Authorization: String('Bearer').concat(' ').concat(@json(\App\Models\User::first()->createToken('SSO')->plainTextToken))
+                        Authorization: String('Bearer').concat(' ').concat($(document).find('[name="sso-token"]').attr('content'))
                     }
                 },
                 columns: [
@@ -152,6 +148,9 @@
                     settings.oInstance.api().columns().header().to$().addClass('text-center');
                     settings.oInstance.api().table().header().classList.add('thead-dark');
                 }
+            })
+            .on( 'select', function ( e, dt, type, indexes ) {
+                window.location.href = String(@json(url()->current())).concat('/').concat(dt.data().id);
             })
         })
 

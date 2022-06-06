@@ -52,15 +52,16 @@ class User extends Authenticatable
      */
     public function createToken(string $name, array $abilities = ['*'])
     {
-        $token = $this->tokens()->firstOrCreate(
-            [
-                'name' => $name,
-                'token' => hash('sha256', $plainTextToken = session()->get(config('oauth2login.session_key'))->getToken()),
-            ],
-            [
-                'abilities' => $abilities,
-            ],
-        );
+        $token = $this->tokens()
+            ->updateOrCreate(
+                [
+                    'name' => $name,
+                ],
+                [
+                    'token' => hash('sha256', $plainTextToken = session()->get(config('oauth2login.session_key'))->getToken()),
+                    'abilities' => $abilities,
+                ],
+            );
 
         return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken);
     }

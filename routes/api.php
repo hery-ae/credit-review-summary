@@ -37,18 +37,19 @@ Route::middleware('auth:sanctum')->get('/SME/logbook', function (Request $reques
     $response = $genericProvider->getParsedResponse($request);
 
     $response['data'] = collect($response['data'])->map( function($item) use($genericProvider, $headers, $body, $token) {
-        $url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/'.$item['id'];
+            $url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/'.$item['id'];
 
-        $request = $genericProvider->getAuthenticatedRequest('GET', $url, $token, [
-            'headers' => $headers,
-            'body' => $body,
-        ]);
+            $request = $genericProvider->getAuthenticatedRequest('GET', $url, $token, [
+                'headers' => $headers,
+                'body' => $body,
+            ]);
 
-        $response = $genericProvider->getParsedResponse($request);
-        $item['facilities'] = $response['data']['facilities'];
+            $response = $genericProvider->getParsedResponse($request);
+            $item['facilities'] = $response['data']['facilities'];
 
-        return $item;
-    });
+            return $item;
+        })
+        ->toArray();
 
     return response()->json($response);
 });

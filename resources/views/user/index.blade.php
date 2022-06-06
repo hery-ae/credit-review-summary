@@ -56,12 +56,8 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready( function() {
-            initApp.destroyNavigation(myapp_config.navHooks);
-            $('a[href="{!! url()->current() !!}"]').parent().attr('class', 'active');
-            initApp.buildNavigation(myapp_config.navHooks);
-            
             $.fn.dataTable.ext.errMode = 'throw';
-            
+
             $('#dt-user').DataTable({
                 responsive: true,
                 fixedHeader: {
