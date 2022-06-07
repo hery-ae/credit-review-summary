@@ -27,7 +27,7 @@
 						</div>
 @endif
                         <div class="row">
-                            <div class="col-xl-12">
+                            <div class="col col-lg-12">
                                 <div id="panel-1" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
@@ -62,10 +62,153 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-12">
                                 <div id="panel-2" class="panel">
                                     <div class="panel-hdr">
                                         <h2>
+											Portfolio <span class="fw-300"><i>Detail</i></span>
+										</h2>
+										<div class="panel-toolbar">
+                                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+											<button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+											<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
+                                            <div class="row">
+                                                <div class="col col-lg-6">
+                                                    <h3>Existing Amount: </h3>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Facilities Breakdown</th>
+                                                                <th class="text-center">Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>PRK</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>DL</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>etc</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col col-lg-6">
+                                                    <h3>Proposed Amount: </h3>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Facilities Breakdown</th>
+                                                                <th class="text-center">Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>PRK</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>DL</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>etc</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-6">
+                                <div id="panel-3" class="panel">
+                                    <div class="panel-hdr">
+                                        <h2>
 											Tracking <span class="fw-300"><i>Detail</i></span>
+										</h2>
+										<div class="panel-toolbar">
+                                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+											<button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+											<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center" colspan="2">Tracking Summary</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Submission Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Assignment Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Reviewer Start Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> &boxh; CRS Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Senior CR Start Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> &boxh; CRS Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> &boxh; Decision Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CR Div. Head Start Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> &boxh; CRS Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> &boxh; Decision Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-lg-6">
+                                <div id="panel-4" class="panel">
+                                    <div class="panel-hdr">
+                                        <h2>
+											Deviation <span class="fw-300"><i>Status</i></span>
 										</h2>
 										<div class="panel-toolbar">
                                             <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>

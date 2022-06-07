@@ -4,10 +4,10 @@ return [
     'oauthconf' => [ // See http://oauth2-client.thephpleague.com/usage/#authorization-code-flow
         'clientId' => env('OAUTH2_CLIENT_ID', ''), // The client ID assigned to you by the provider
         'clientSecret' => env('OAUTH2_CLIENT_SECRET', ''), // The client password assigned to you by the provider
-        'redirectUri' => env('OAUTH2_REDIRECT_URI', 'https://crs.ccbi.co.id/oauth2/callback'),
-        'urlAuthorize' => env('OAUTH2_URL_AUTHORIZE', 'https://sso.ccbi.co.id/auth/realms/ccbi/protocol/openid-connect/auth'),
-        'urlAccessToken' => env('OAUTH2_URL_ACCESS_TOKEN', 'https://sso.ccbi.co.id/auth/realms/ccbi/protocol/openid-connect/token'),
-        'urlResourceOwnerDetails' => env('OAUTH2_URL_RESOURCE_OWNER_DETAILS', 'https://sso.ccbi.co.id/auth/realms/ccbi/protocol/openid-connect/userinfo'),
+        'redirectUri' => env('OAUTH2_REDIRECT_URI', ''),
+        'urlAuthorize' => env('OAUTH2_URL_AUTHORIZE', ''),
+        'urlAccessToken' => env('OAUTH2_URL_ACCESS_TOKEN', ''),
+        'urlResourceOwnerDetails' => env('OAUTH2_URL_RESOURCE_OWNER_DETAILS', ''),
     ],
     'provider' => \Kronthto\LaravelOAuth2Login\OAuthProvider::class,
 

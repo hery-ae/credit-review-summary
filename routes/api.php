@@ -1,8 +1,12 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Token\AccessToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +56,31 @@ Route::middleware('auth:sanctum')->get('/SME/logbook', function (Request $reques
         ->toArray();
 
     return response()->json($response);
+});
+
+Route::get('/sanctum/token', function (Request $request) {
+    $genericProvider = new GenericProvider(config('oauth2login.oauthconf'));
+    $accessToken = new AccessToken(['access_token' => $request->bearerToken()]);
+
+    try {
+        $resourceOwner = $genericProvider->getResourceOwner($accessToken);
+
+    } catch (IdentityProviderException $e) {
+        throw ValidationException::withMessages($e->getResponseBody());
+    }
+
+    $attributes = $resourceOwner->toArray();
+    $user = User::where('email', $attributes['email'])->firstOrFail();
+    $token = $user->tokens()
+        ->updateOrCreate(
+            [
+                'name' => 'SSO',
+            ],
+            [
+                'token' => hash('sha256', $plainTextToken = $accessToken),
+                'abilities' => ['*'],
+            ],
+        );
+
+    return response()->json($user->forceFill(['token' => $token->getKey().'|'.$plainTextToken])->toArray());
 });
