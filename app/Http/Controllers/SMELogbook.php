@@ -15,9 +15,7 @@ class SMELogbook extends Controller
     public function index()
     {
 
-        return view('SME.logbook.index', [
-            //'applications' => $genericProvider->getParsedResponse($request),
-        ]);
+        return view('SME.logbook.index');
     }
 
     /**
@@ -49,9 +47,17 @@ class SMELogbook extends Controller
      */
     public function show($id)
     {
+        $genericProvider = new GenericProvider(config('oauth2login.oauthconf'));
+
+        $headers = ['Content-Type' => 'application/json; charset=utf-8'];
+        $url = 'http://devdloan.ccbi.co.id/api/v1/aplikasi/'.$id;
+
+        $request = $genericProvider->getAuthenticatedRequest('GET', $url, session()->get(config('oauth2login.session_key')), [
+            'headers' => $headers,
+        ]);
 
         return view('SME.logbook.show', [
-            //'applications' => $genericProvider->getParsedResponse($request),
+            'application' => $genericProvider->getParsedResponse($request),
         ]);
     }
 

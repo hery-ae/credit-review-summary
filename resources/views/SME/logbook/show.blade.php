@@ -14,18 +14,6 @@
                                 <i class='subheader-icon fal fa-table'></i> Logbook / SME
                             </h1>
                         </div>
-@if (session('status'))
-						<div id="alert-dismissible" class="panel-container show">
-							<div class="panel-content">
-								<div class="alert alert-success alert-dismissible fade show" role="alert">
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-										<span aria-hidden="true"><i class="fal fa-times"></i></span>
-									</button>
-									<strong>Well Done!</strong> {{ session('status') }}
-								</div>
-							</div>
-						</div>
-@endif
                         <div class="row">
                             <div class="col col-lg-12">
                                 <div id="panel-1" class="panel">
@@ -44,19 +32,23 @@
                                             <form>
                                                 <div class="form-group">
                                                     <label class="form-label" for="app-number">App Number</label>
-                                                    <input type="text" class="form-control" readonly value="002/SME/CFR/092/IV/2022">
+                                                    <input type="text" class="form-control" readonly value="{{ $application['noAplikasi'] }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="debtor">Debtor</label>
-                                                    <input type="text" class="form-control" readonly value="CV KARYA UTAMA">
+                                                    <input type="text" class="form-control" readonly value="{{
+                                                        $application['debitur']['infoDebitur']['namaBisnis']
+                                                    }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="proposal-type">Proposal Type</label>
-                                                    <input type="text" class="form-control" readonly value="Baru">
+@foreach ($application['data']['facilities'] as $value)
+                                                    <input type="text" class="form-control" readonly value="{{ $value['typeFacility']['text'] }}">
+@endforeach
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" for="proposal-type">Status</label>
-                                                    <input type="text" class="form-control" readonly value="ON_PROGRESS">
+                                                    <input type="text" class="form-control" readonly value="{{ $application['statusAplikasi'] }}">
                                                 </div>
                                             </form>
                                         </div>
@@ -160,7 +152,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Submission Date</td>
-                                                        <td class="text-right"></td>
+                                                        <td class="text-right">{{
+                                                            \Carbon\Carbon::createFromFormat('d/m/Y', $application['updatedAt'])
+                                                            ->toFormattedDateString()
+                                                        }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Assignment Date</td>
@@ -198,6 +193,26 @@
                                                         <td> &boxh; Decision Date</td>
                                                         <td class="text-right"></td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Director 01 Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Director 02 Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Director 03 Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CR Div. Head Start Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CR Div. Head Start Date</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -218,14 +233,59 @@
                                     </div>
                                     <div class="panel-container show">
                                         <div class="panel-content">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Status</th>
+                                                        <th class="text-center">Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Three Pillars</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>DSCR</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SCCR</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CCR</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>etc</td>
+                                                        <td class="text-right"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-12">
+                                <div id="panel-5" class="panel">
+                                    <div class="panel-hdr">
+                                        <h2>
+											Note
+										</h2>
+										<div class="panel-toolbar">
+                                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+											<button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+											<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
                                             <form>
                                                 <div class="form-group">
-                                                    <label class="form-label" for="submission-date">Submission Date</label>
-                                                    <input type="text" class="form-control" readonly value="Apr 14, 2022">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label" for="assignment-date">Assignment Date</label>
-                                                    <input type="text" class="form-control" readonly value="May 25, 2022">
+                                                    <textarea class="form-control" id="note-textarea" rows="10" readonly></textarea>
                                                 </div>
                                             </form>
                                         </div>
