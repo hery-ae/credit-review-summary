@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User;
 use App\Http\Controllers\SMELogbook;
+use App\Http\Controllers\SMEAssignment;
+use App\Http\Controllers\SMEApproval;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +29,14 @@ Route::middleware('oauth2')->group( function() {
         Route::resource('logbook', SMELogbook::class);
 
         Route::resource('assignment', SMEAssignment::class);
-/*
+
         Route::get('approval', [SMEApproval::class, 'index'])
         ->name('approval');
-*/
+
     });
 
     Route::prefix('commercial')->group( function() {
-        Route::resource('logbook', CommercialLogbook::class);
+        //Route::resource('logbook', CommercialLogbook::class);
     });
 
 });
