@@ -734,6 +734,8 @@
 //@@can('viewAny', 'App\SalesDeal')
                 'nav.dashboard',
                 'nav.sme_logbook',
+                'nav.sme_assignment',
+                'nav.sme_approval',
                 'nav.users'
 //@@endcan
             ];
