@@ -28,7 +28,7 @@ Route::middleware('oauth2')->group( function() {
 
         Route::resource('assignment', SMEAssignment::class);
 
-        Route::get('/approval', SMEApproval::class.'@index')
+        Route::get('approval', [SMEApproval::class, 'index'])
         ->name('approval');
 
     });
