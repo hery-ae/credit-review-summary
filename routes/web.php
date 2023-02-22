@@ -25,6 +25,11 @@ Route::middleware('oauth2')->group( function() {
 
     Route::prefix('SME')->name('SME.')->group(function () {
         Route::resource('logbook', SMELogbook::class);
+
+        Route::resource('assignment', SMEAssignment::class);
+
+        Route::get('/approval', SMEApproval::class.'@index');
+
     });
 
     Route::prefix('commercial')->group( function() {
