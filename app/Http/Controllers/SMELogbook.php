@@ -14,7 +14,6 @@ class SMELogbook extends Controller
      */
     public function index()
     {
-
         return view('SME.logbook.index');
     }
 

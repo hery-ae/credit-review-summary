@@ -14,7 +14,7 @@ class SMEAssignment extends Controller
      */
     public function index()
     {
-        //
+        return view('SME.assignment.index');
     }
 
     /**
