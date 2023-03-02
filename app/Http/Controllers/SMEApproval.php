@@ -8,6 +8,6 @@ class SMEApproval extends Controller
 {
     public function index()
     {
-        return view('SME.assignment.index');
+        return view('SME.approval.index');
     }
 }

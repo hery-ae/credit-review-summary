@@ -1,5 +1,5 @@
 <x-layout>
-<x-slot name="title">Logbook - SME - {{ config('app.name') }}</x-slot>
+<x-slot name="title">Assignment - SME - {{ config('app.name') }}</x-slot>
           <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
               <li class="breadcrumb-item"><a href="/">{{ config('app.name') }}</a></li>
@@ -9,7 +9,7 @@
             </ol>
             <div class="subheader">
               <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-table'></i> Logbook / SME
+                <i class='subheader-icon fal fa-table'></i> Assignment / SME
               </h1>
             </div>
             <div class="row">
@@ -17,7 +17,7 @@
                 <div id="panel-1" class="panel">
                   <div class="panel-hdr">
                     <h2>
-                      Logbook <span class="fw-300"><i>Detail</i></span>
+                      Assignment <span class="fw-300"><i>Detail</i></span>
                     </h2>
                     <div class="panel-toolbar">
                       <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -286,6 +286,35 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-lg-12">
+                <form action="//dloan.ccbi.co.id" method="get">
+                    <input type="hidden" name="route-name" value="{{ request()->route()->getName() }}">
+                    <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#modal-alert">
+                        <span class="fal fa-check mr-1"></span>
+                        DLoan Preview
+                    </button>
+                </form>
+                <form action="//dloan.ccbi.co.id" method="post">
+                    <input type="hidden" name="route-name" value="{{ request()->route()->getName() }}">
+                    <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#modal-alert">
+                        <span class="fal fa-check mr-1"></span>
+                        Back to Draft
+                    </button>
+                </form>
+                <form action="{{ route('SME.assignment.update', ['assignment' => $application['noAplikasi']]) }}" method="post">
+                    @method(strtoupper('patch'))
+                    
+                    @csrf
+                    
+                    <input type="hidden" name="route-name" value="{{ request()->route()->getName() }}">
+                    <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#modal-alert">
+                        <span class="fal fa-check mr-1"></span>
+                        Start Now
+                    </button>
+                </form>
               </div>
             </div>
           </main>

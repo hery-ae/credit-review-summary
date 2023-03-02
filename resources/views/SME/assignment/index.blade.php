@@ -1,58 +1,55 @@
 <x-layout>
-<x-slot name="title">Logbook - SME - {{ config('app.name') }}</x-slot>
-					<!-- BEGIN Page Content -->
-                    <!-- the #js-page-content id is needed for some plugins to initialize -->
-                    <main id="js-page-content" role="main" class="page-content">
-                        <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">{{ config('app.name') }}</a></li>
-                            <li class="breadcrumb-item"><a href="#SME">SME</a></li>
-                            <li class="breadcrumb-item active">Logbook</li>
-                            <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
-                        </ol>
-                        <div class="subheader">
-                            <h1 class="subheader-title">
-                                <i class='subheader-icon fal fa-table'></i> Logbook / SME
-                            </h1>
-                        </div>
+<x-slot name="title">Assignment - SME - {{ config('app.name') }}</x-slot>
+          <main id="js-page-content" role="main" class="page-content">
+            <ol class="breadcrumb page-breadcrumb">
+              <li class="breadcrumb-item"><a href="/">{{ config('app.name') }}</a></li>
+              <li class="breadcrumb-item"><a href="#SME">SME</a></li>
+              <li class="breadcrumb-item active">Assignment</li>
+              <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
+            </ol>
+            <div class="subheader">
+              <h1 class="subheader-title">
+                <i class='subheader-icon fal fa-table'></i> Assignment / SME
+              </h1>
+            </div>
 @if (session('status'))
-						<div id="alert-dismissible" class="panel-container show">
-							<div class="panel-content">
-								<div class="alert alert-success alert-dismissible fade show" role="alert">
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-										<span aria-hidden="true"><i class="fal fa-times"></i></span>
-									</button>
-									<strong>Well Done!</strong> {{ session('status') }}
-								</div>
-							</div>
-						</div>
+            <div id="alert-dismissible" class="panel-container show">
+              <div class="panel-content">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                  </button>
+                  <strong>Well Done!</strong> {{ session('status') }}
+                </div>
+              </div>
+            </div>
 @endif
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div id="panel-1" class="panel">
-                                    <div class="panel-hdr">
-                                        <h2>
-											Logbook <span class="fw-300"><i>Table</i></span>
-										</h2>
-										<div class="panel-toolbar">
-                                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-											<button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-											<button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
-                                        </div>
-                                    </div>
-                                    <div class="panel-container show">
-                                        <div class="panel-content">
-                                            <!-- datatable start -->
-                                            <table id="dt-user" class="table table-bordered table-hover table-striped w-100"></table>
-                                            <!-- datatable end -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                    <!-- this overlay is activated only when mobile menu is triggered -->
-                    <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
-                    <!-- END Page Content -->
+            <div class="row">
+              <div class="col-xl-12">
+                <div id="panel-1" class="panel">
+                  <div class="panel-hdr">
+                    <h2>
+                      Assignment <span class="fw-300"><i>Table</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                      <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                      <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                      <button class="btn btn-panel" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                    </div>
+                  </div>
+                  <div class="panel-container show">
+                    <div class="panel-content">
+                      <!-- datatable start -->
+                      <table id="dt-user" class="table table-bordered table-hover table-striped w-100"></table>
+                      <!-- datatable end -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+          <!-- this overlay is activated only when mobile menu is triggered -->
+          <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
 
 @push('scripts')
     <script type="text/javascript">

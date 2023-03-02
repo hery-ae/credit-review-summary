@@ -1,15 +1,15 @@
 <x-layout>
-<x-slot name="title">Logbook - SME - {{ config('app.name') }}</x-slot>
+<x-slot name="title">CRS Management &amp; Approval - SME - {{ config('app.name') }}</x-slot>
           <main id="js-page-content" role="main" class="page-content">
             <ol class="breadcrumb page-breadcrumb">
               <li class="breadcrumb-item"><a href="/">{{ config('app.name') }}</a></li>
               <li class="breadcrumb-item"><a href="#SME">SME</a></li>
-              <li class="breadcrumb-item active">Logbook</li>
+              <li class="breadcrumb-item active">CRS Management &amp; Approval</li>
               <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
             </ol>
             <div class="subheader">
               <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-table'></i> Logbook / SME
+                <i class='subheader-icon fal fa-table'></i> CRS Management &amp; Approval / SME
               </h1>
             </div>
 @if (session('status'))
@@ -29,7 +29,7 @@
                 <div id="panel-1" class="panel">
                   <div class="panel-hdr">
                     <h2>
-                      Logbook <span class="fw-300"><i>Table</i></span>
+                      CRS Management &amp; Approval <span class="fw-300"><i>Table</i></span>
                     </h2>
                     <div class="panel-toolbar">
                       <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -81,56 +81,47 @@
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [],
 //@@endcan
-                serverSide: true,
+                /*serverSide: true,
                 ajax: {
                     url: '/api/SME/logbook',
                     type: 'GET',
                     headers: {
                         Authorization: String('Bearer').concat(' ').concat($(document).find('[name="sso-token"]').attr('content'))
                     }
-                },
+                },*/
                 columns: [
                     {
-                        title: 'Submission',
-                        data: 'updatedAt',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return moment(data, 'DD/MM/YYYY').format('ll');
-                        }
+                        title: 'Submission'
                     },
                     {
-                        title: 'App Number',
-                        data: 'noAplikasi',
-                        className: 'text-center'
+                        title: 'App Number'
                     },
                     {
-                        title: 'Debtor',
-                        data: 'nama'
+                        title: 'Debtor'
                     },
                     {
-                        title: 'Branch',
-                        data: 'namaCabang'
+                        title: 'Branch'
                     },
                     {
-                        title: 'Regional',
-                        data: 'namaRegional'
+                        title: 'Regional'
                     },
                     {
-                        title: 'Proposal Type',
-                        data: 'facilities',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return data.map((facility) => facility.typeFacility.text).join(', ');
-                        }
+                        title: 'Proposal Type'
                     },
                     {
-                        title: 'Position',
-                        data: 'updatedBy'
+                        title: 'Position'
                     },
                     {
-                        title: 'Status',
-                        data: 'statusAplikasi',
-                        className: 'text-center'
+                        title: 'CRS Status'
+                    },
+                    {
+                        title: '3 Pilar Status'
+                    },
+                    {
+                        title: 'Terms &amp; Conditions'
+                    },
+                    {
+                        title: 'Approval'
                     }
                 ],
                 language: {
