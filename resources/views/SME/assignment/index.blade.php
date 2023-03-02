@@ -40,7 +40,7 @@
                   <div class="panel-container show">
                     <div class="panel-content">
                       <!-- datatable start -->
-                      <table id="dt-user" class="table table-bordered table-hover table-striped w-100"></table>
+                      <table id="dt-assignment" class="table table-bordered table-hover table-striped w-100"></table>
                       <!-- datatable end -->
                     </div>
                   </div>
@@ -60,7 +60,7 @@
             
             $.fn.dataTable.ext.errMode = 'throw';
             
-            dtAdvance = $('#dt-user').DataTable({
+            dtAdvance = $('#dt-assignment').DataTable({
                 responsive: true,
                 fixedHeader: {
                     headerOffset: $(document.body)
@@ -71,7 +71,6 @@
                 lengthChange: false,
                 bInfo: false,
                 order: [],
-//@@can('create', 'App\User')
                 select: 'single',
                 dom: "<'row mb-3'" +
                     "<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f>" +
@@ -80,7 +79,6 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [],
-//@@endcan
                 serverSide: true,
                 ajax: {
                     url: '/api/SME/logbook',
@@ -136,11 +134,9 @@
                 language: {
                     infoFiltered: ''
                 },
-//@@can('create', 'App\User')
                 createdRow: function(row, data, dataIndex) {
                     $(row).addClass('pointer');
                 },
-//@@endcan
                 initComplete: function(settings, json) {
                     settings.oInstance.api().columns().header().to$().addClass('text-center');
                     settings.oInstance.api().table().header().classList.add('thead-dark');
