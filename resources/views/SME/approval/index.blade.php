@@ -87,39 +87,117 @@
                         Authorization: String('Bearer').concat(' ').concat($(document).find('[name="sso-token"]').attr('content'))
                     }
                 },*/
+data: [
+    {
+        submission: '8 Apr 2023',
+        app_number: '999/SME/XYZ/999/XI/2023',
+        debtor: 'ABC XYZ',
+        branch: 'NAMA CABANG',
+        regional: 'NAMA REGIONAL',
+        proposal_type: 'Baru',
+        proposal_type: 'Nama User',
+    }
+],
                 columns: [
                     {
-                        title: 'Submission'
+                        title: 'Submission',
+                        data: 'submission'
                     },
                     {
-                        title: 'App Number'
+                        title: 'App Number',
+                        data: 'app_number'
                     },
                     {
-                        title: 'Debtor'
+                        title: 'Debtor',
+                        data: 'debtor'
                     },
                     {
-                        title: 'Branch'
+                        title: 'Branch',
+                        data: 'branch'
                     },
                     {
-                        title: 'Regional'
+                        title: 'Regional',
+                        data: 'regional'
                     },
                     {
-                        title: 'Proposal Type'
+                        title: 'Proposal Type',
+                        data: 'proposal_type'
                     },
                     {
-                        title: 'Position'
+                        title: 'Position',
+                        data: 'position'
                     },
                     {
-                        title: 'CRS Status'
+                        title: 'CRS Status',
+                        render: function(data, type, row, meta) {
+                            data = {
+                                    badge: 'badge-warning',
+                                    text: document.createTextNode('Warning')
+                                };
+
+                            data.element = document.createElement('span');
+
+                            data.element.classList.add('badge');
+                            data.element.classList.add(data.badge);
+                            data.element.classList.add('badge-pill');
+                            data.element.appendChild(data.text);
+
+                            return data.element.outerHTML;
+                        }
                     },
                     {
-                        title: '3 Pilar Status'
+                        title: '3 Pilar Status',
+                        render: function(data, type, row, meta) {
+                            data = {
+                                    badge: 'badge-warning',
+                                    text: document.createTextNode('Warning')
+                                };
+
+                            data.element = document.createElement('span');
+
+                            data.element.classList.add('badge');
+                            data.element.classList.add(data.badge);
+                            data.element.classList.add('badge-pill');
+                            data.element.appendChild(data.text);
+
+                            return data.element.outerHTML;
+                        }
                     },
                     {
-                        title: 'Terms &amp; Conditions'
+                        title: 'Terms &amp; Conditions',
+                        render: function(data, type, row, meta) {
+                            data = {
+                                    badge: 'badge-warning',
+                                    text: document.createTextNode('Warning')
+                                };
+
+                            data.element = document.createElement('span');
+
+                            data.element.classList.add('badge');
+                            data.element.classList.add(data.badge);
+                            data.element.classList.add('badge-pill');
+                            data.element.appendChild(data.text);
+
+                            return data.element.outerHTML;
+                        }
                     },
                     {
-                        title: 'Approval'
+                        title: 'Approval',
+                        render: function(data, type, row, meta) {
+                            data = {
+                                    badge: 'badge-warning',
+                                    text: document.createTextNode('Warning')
+                                };
+
+                            data.element = document.createElement('span');
+
+                            data.element.classList.add('badge');
+                            data.element.classList.add(data.badge);
+                            data.element.classList.add('badge-pill');
+                            data.element.appendChild(data.text);
+
+                            return data.element.outerHTML;
+                        }
                     }
                 ],
                 language: {

@@ -20,7 +20,7 @@ use App\Http\Controllers\SMEApproval;
 Route::middleware('oauth2')->group( function() {
 
     Route::get('/', function () {
-        return view('welcome');
+        return view('home');
     });
 
     Route::resource('users', User::class);
@@ -34,9 +34,9 @@ Route::middleware('oauth2')->group( function() {
         ->name('approval');
 
     });
-
+/*
     Route::prefix('commercial')->group( function() {
-        //Route::resource('logbook', CommercialLogbook::class);
+        Route::resource('logbook', CommercialLogbook::class);
     });
-
+*/
 });
