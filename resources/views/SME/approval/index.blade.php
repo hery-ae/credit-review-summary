@@ -101,7 +101,8 @@ data: [
                 columns: [
                     {
                         title: 'Submission',
-                        data: 'submission'
+                        data: 'submission',
+                        className: 'text-center'
                     },
                     {
                         title: 'App Number',
@@ -121,14 +122,17 @@ data: [
                     },
                     {
                         title: 'Proposal Type',
-                        data: 'proposal_type'
+                        data: 'proposal_type',
+                        className: 'text-center'
                     },
                     {
                         title: 'Position',
-                        data: 'position'
+                        data: 'position',
+                        className: 'text-center'
                     },
                     {
                         title: 'CRS Status',
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             data = {
                                     badge: 'badge-warning',
@@ -147,6 +151,7 @@ data: [
                     },
                     {
                         title: '3 Pilar Status',
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             data = {
                                     badge: 'badge-warning',
@@ -165,6 +170,7 @@ data: [
                     },
                     {
                         title: 'Terms &amp; Conditions',
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             data = {
                                     badge: 'badge-warning',
@@ -183,6 +189,7 @@ data: [
                     },
                     {
                         title: 'Approval',
+                        className: 'text-center',
                         render: function(data, type, row, meta) {
                             data = {
                                     badge: 'badge-warning',
