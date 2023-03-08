@@ -95,7 +95,7 @@ data: [
         branch: 'NAMA CABANG',
         regional: 'NAMA REGIONAL',
         proposal_type: 'Baru',
-        proposal_type: 'Nama User',
+        position: 'Nama User',
     }
 ],
                 columns: [
